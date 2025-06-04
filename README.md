@@ -24,7 +24,7 @@ src/
   track.py               # Progress tracking
   companies.xlsx         # Excel file with company details
   chintamani_pala_web-developer-resume.pdf # Resume PDF
-.env                     # Environment variables (not committed)
+  .env                     # Environment variables (not committed)
 ```
 
 ## Setup
@@ -38,7 +38,7 @@ src/
 
 3. **Configure environment variables**
 
-   Copy `.env.example` to `.env` and fill in your credentials:
+   Copy `src/.env.example` to `src/.env` and fill in your credentials:
    ```
    GOOGLE_API_KEY=your_google_api_key_here
    SENDER_EMAIL=your_sender_email_here
@@ -70,7 +70,8 @@ src/
 Run the main script:
 
 ```sh
-python src/main.py
+cd ./src
+python main.py
 ```
 
 The script will:
