@@ -1,0 +1,8 @@
+.env
+.venv
+__pycache__/
+*.pyc
+generate_xl.py
+hr_contacts.xlsx
+chintamani_pala_web-developer-resume.pdf
+.vscode/
