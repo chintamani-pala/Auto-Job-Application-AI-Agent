@@ -4,13 +4,18 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from system_prompt import get_system_prompt
 from output_structure import OutputStructure
 from send_mail import send_mail_with_pdf
-from track import get_last_completed_index, update_tracker
+from track import (
+    get_last_completed_index,
+    update_tracker,
+    get_last_completed_daily_index,
+    update_daily_tracker,
+)
 from get_company_details import get_company_count
 from get_company_details import get_file_name
 import os
 import time
 
-load_dotenv()
+load_dotenv(dotenv_path=".env", override=True)
 
 
 def send_email_to_hr():
@@ -46,15 +51,22 @@ def send_email_to_hr():
 
 if __name__ == "__main__":
     try:
-        while get_last_completed_index() + 1 < int(
-            os.getenv("MAX_MAILS_PER_DAY", 10)
-        ) and get_last_completed_index() + 1 < int(
-            get_company_count(file_path=get_file_name())
+        max_mails_per_day = int(os.getenv("MAX_MAILS_PER_DAY", 10))
+        company_count = int(get_company_count(file_path=get_file_name()))
+        while (
+            get_last_completed_daily_index() + 1 <= max_mails_per_day
+            and get_last_completed_index() + 1 < company_count
         ):
             send_email_to_hr()
+            update_daily_tracker(get_last_completed_daily_index() + 1)
             print("Waiting for 5 seconds before sending the next email...")
             time.sleep(5)
             print("Continuing to the next email...")
+        else:
+            print(
+                "Reached the maximum number of emails for today or all companies processed."
+            )
+            update_daily_tracker(0)  # Reset daily tracker after processing
     except Exception as e:
         print(f"An error occurred: {e}")
     else:

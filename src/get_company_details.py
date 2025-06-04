@@ -3,7 +3,7 @@ import pandas as pd
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+load_dotenv(dotenv_path=".env", override=True)
 
 
 def get_details_as_json_by_index(index: int, file_path: str = "companies_detail.xlsx"):

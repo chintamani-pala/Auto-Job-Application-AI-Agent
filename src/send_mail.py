@@ -4,7 +4,7 @@ import smtplib
 from email.message import EmailMessage
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(dotenv_path=".env", override=True)
 
 
 def send_mail_with_pdf(receiver_email, subject, body, pdf_path=None):
